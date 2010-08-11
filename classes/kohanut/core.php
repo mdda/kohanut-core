@@ -404,8 +404,7 @@ class Kohanut_Core {
 		return Route::get($name)->uri($params);
 	}
 
-	/* Route control
-	 * Allow access to reverse routing
+	/* Media URL generator
 	 */
 	public static function media($file)
 	{
