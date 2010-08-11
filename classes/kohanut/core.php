@@ -395,6 +395,22 @@ class Kohanut_Core {
 		}
 		return $out;
 	}
+
+	/* Route control
+	 * Allow access to reverse routing
+	 */
+	public static function route($name, $params)
+	{
+		return Route::get($name)->uri($params);
+	}
+
+	/* Route control
+	 * Allow access to reverse routing
+	 */
+	public static function media($file)
+	{
+		return Kohanut::route('kohanut-media', array('file' => $file));
+	}
 	
 	/**
 	 * Print some render stats
