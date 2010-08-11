@@ -86,7 +86,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		
 		// Make it so the admin pane for pages is shown
 		Kohanut::$adminmode = true;
-		Kohanut::style( Route::get('kohanut-media')->uri(array('file'=>'css/page.css')));
+		Kohanut::style( Route::get('kohanut-media')->uri(array('file'=>'kohanut/css/page.css')));
 		
 		// Render the page
 		$this->request->response = $page->render();
