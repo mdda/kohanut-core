@@ -13,9 +13,9 @@ if (is_dir($modules['kohanut'].'/classes/controller/kohanut/install'))
 }
 
 // Media required for kohanut admin
-Route::set('kohanut-media','admin/media(/<file>)', array('file' => '.+'))
+Route::set('kohanut-media','media(/<file>)', array('file' => '.+'))
 	->defaults(array(
-		'controller' => 'admin',
+		'controller' => 'media',
 		'action'     => 'media',
 		'directory'  => 'kohanut',
 		'file'       => NULL,
