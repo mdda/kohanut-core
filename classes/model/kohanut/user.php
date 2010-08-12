@@ -9,6 +9,11 @@
  */
 class Model_Kohanut_User extends Sprig_Model_User {
 
-	
+	protected function _init()
+	{
+		parent::_init();
+
+		$this->_fields['last_login']->null = TRUE;
+	}
 
 } // End User
