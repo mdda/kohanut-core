@@ -7,25 +7,55 @@
  */
 class Kohanut_Plugin {
 	protected static $_registered_plugins = array();
+	protected static $_installed_plugins = array();
+	protected static $_known_plugins = array();
 
 	public static function register($name, $version = NULL)
 	{
+		if (empty(Kohanut_Plugin::$_known_plugins))
+		{
+			$plugins = Sprig::factory('kohanut_plugin')->load(NULL, FALSE);
+			foreach ($plugins as $plugin)
+			{
+				if ($plugin->installed)
+				{
+					Kohanut_Plugin::$_installed_plugins[$plugin->name] = $plugin->name;
+				}
+
+				Kohanut_Plugin::$_known_plugins[$plugin->name] = $plugin->name;
+			}
+		}
+
+		if ( ! isset(Kohanut_Plugin::$_known_plugins[$name]))
+		{
+			$plugin = Sprig::factory('kohanut_plugin');
+			$plugin->name = $name;
+			$plugin->create();
+		}
+		
 		Kohanut_Plugin::$_registered_plugins[$name] = array('name'=> $name, 'version' => $version);
 
 		Event::run('kohanut_plugin_registered', Kohanut_Plugin::$_registered_plugins[$name]);
+
+		if (isset(Kohanut_Plugin::$_installed_plugins[$name]))
+		{
+			$class = "Kohanut_Plugin_".$name;
+			$class::init();
+		}
 	}
 
-	public static function unregister_plugin($name)
-	{
-		if ( ! isset(Kohanut_Plugin::$_registered_plugins[$name]))
-			return FALSE;
-
-		Event::run('kohanut_plugin_unregistered', Kohanut_Plugin::$_registered_plugins[$name]);
-
-		unset(Kohanut_Plugin::$_registered_plugins[$name]);
-
-		return TRUE;
-	}
+	// Is this needed?
+//	public static function unregister_plugin($name)
+//	{
+//		if ( ! isset(Kohanut_Plugin::$_registered_plugins[$name]))
+//			return FALSE;
+//
+//		Event::run('kohanut_plugin_unregistered', Kohanut_Plugin::$_registered_plugins[$name]);
+//
+//		unset(Kohanut_Plugin::$_registered_plugins[$name]);
+//
+//		return TRUE;
+//	}
 
 //	public static function check_dependencies($name)
 //	{
@@ -52,16 +82,24 @@ class Kohanut_Plugin {
 		$result = FALSE;
 
 		// Give the plugin a chance to get itself ready to go.
-		Event::run('kohanut_plugin_install_'.$name, $result);
+		$class = "Kohanut_Plugin_".$name;
 
-		if ( ! $result)
+		if ( ! $class::install())
 		{
 			unset(Kohanut_Plugin::$_registered_plugins[$name]);
 			// TODO: Alert the user somehow
 			return FALSE;
 		}
 
-		// TODO: Update database
+		$plugin = Sprig::factory('kohanut_plugin');
+		$plugin->name = $name;
+		$plugin->load();
+
+		if ($plugin->loaded())
+		{
+			$plugin->installed = 1;
+			$plugin->update();
+		}
 
 		Event::run('kohanut_plugin_installed', Kohanut_Plugin::$_registered_plugins[$name]);
 
@@ -70,7 +108,7 @@ class Kohanut_Plugin {
 
 	public static function uninstall($name)
 	{
-		if ( ! isset(Kohanut_Plugin::$_registered_plugins[$name]))
+		if ( ! isset(Kohanut_Plugin::$_installed_plugins[$name]))
 		{
 			// TODO: Alert the user somehow
 			return FALSE;
@@ -79,15 +117,23 @@ class Kohanut_Plugin {
 		$result = FALSE;
 
 		// Give the plugin a chance to get itself ready to be disabled.
-		Event::run('kohanut_plugin_uninstall_'.$name, $result);
+		$class = "Kohanut_Plugin_".$name;
 
-		if ( ! $result)
+		if ( ! $class::uninstall())
 		{
 			// TODO: Alert the user somehow
 			return FALSE;
 		}
 
-		// TODO: Update database
+		$plugin = Sprig::factory('kohanut_plugin');
+		$plugin->name = $name;
+		$plugin->load();
+
+		if ($plugin->loaded())
+		{
+			$plugin->installed = 0;
+			$plugin->update();
+		}
 
 		Event::run('kohanut_plugin_uninstalled', Kohanut_Plugin::$_registered_plugins[$name]);
 

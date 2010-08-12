@@ -34,6 +34,16 @@
 		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'layouts')) , __('Layouts') ) ?></li>
 		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'users')) , __('Users') ) ?></li>
 		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'redirects')) , __('Redirects') ) ?></li>
+		<?php
+		$admin_nav_links = array();
+		Event::run('kohanut_admin_navigation_link', $admin_nav_links);
+		foreach ($admin_nav_links as $name => $options):
+		?>
+			<li><?php echo html::anchor( Route::get('kohanut-admin')->uri($options) , __($name) ) ?></li>
+		<?php
+		endforeach;
+		?>
+		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'plugins')) , __('Plugins') ) ?></li>
 	</ul>
 
 	<div id="content" class="container_16 clearfix">
