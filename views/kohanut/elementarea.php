@@ -16,7 +16,7 @@ echo $content;
 if (Kohanut::$adminmode)
 {
 ?>
-<div class="kohanut_element_ctl">
+<div class="kohanut_element_ctl kohanut_element_ctl_bottom">
 	<p class="title"><span class="fam-add inline-sprite"></span><?php echo __('Add New Element') ?></p>
 	<?php echo form::open() ?>
 	<?php echo form::hidden('area',$id); ?>

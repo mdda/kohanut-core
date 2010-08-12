@@ -114,13 +114,19 @@
 		}
 	
 		#pagetree .pageinfo .actions {
-			display:none;
+			filter:alpha(opacity=30);
+			-moz-opacity: 0.3;
+			-khtml-opacity: 0.3;
+			opacity: 0.3;
 			float:right;
 			padding:5px 0 0;
 			z-index:1;
 		}
 			#pagetree .pageinfo:hover .actions {
-				display:block;
+				filter:alpha(opacity=100);
+				-moz-opacity: 1;
+				-khtml-opacity: 1;
+				opacity: 1;
 			}
 			
 			#pagetree .pageinfo .actions a {

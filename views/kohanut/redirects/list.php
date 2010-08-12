@@ -28,7 +28,7 @@
 					echo
 					html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects','action'=>'edit','params'=>$item->id)),
 						"<p>" . $item->url .
-						html::image(Route::get('kohanut-media')->uri(array('file'=>'img/bullet_go.png')),array('alt'=>'redirects to')) .
+						html::image(Route::get('kohanut-media')->uri(array('file'=>'kohanut/img/bullet_go.png')),array('alt'=>'redirects to')) .
 						$item->newurl .
 						"<small>" .
 							(($item->type == "301")?__('permanent').' (301)':'').

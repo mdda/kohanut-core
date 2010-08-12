@@ -1,4 +1,4 @@
-<div class="kohanut_element_ctl">
+<div class="kohanut_element_ctl kohanut_element_ctl_top">
 	<p class="title"><?php echo $title ?></p>
 	<ul class="kohanut_element_actions">
 		<?php

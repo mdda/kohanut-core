@@ -3,7 +3,7 @@
 
 $level = $nodes->current()->lvl;
 $first = TRUE;
-echo "<div id='pagetreeloading'>" . html::image(Route::get('kohanut-media')->uri(array('file'=>'img/loading.gif')),array('alt'=>'loading')) . __('Loading...') . '</div>';
+echo "<div id='pagetreeloading'>" . html::image(Route::get('kohanut-media')->uri(array('file'=>'kohanut/img/loading.gif')),array('alt'=>'loading')) . __('Loading...') . '</div>';
 echo "<ul id='pagetree'><div class='clear'></div>";
 foreach ($nodes as $node)
 {

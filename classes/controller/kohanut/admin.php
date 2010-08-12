@@ -21,15 +21,9 @@ class Controller_Kohanut_Admin extends Controller {
 	protected $requires_login = true;
 	
 	public function before()
-	{
-		// Do not template media files
-		if ($this->request->action === 'media')
-		{
-			$this->auto_render = FALSE;
-		}
-		
-		// Do not require login for media or login/logout
-		if ($this->request->action === 'media' OR $this->request->action === 'login' OR $this->request->action === 'logout')
+	{	
+		// Do not require login for login/logout
+		if ($this->request->action === 'login' OR $this->request->action === 'logout')
 		{
 			$this->requires_login = FALSE;
 		}
@@ -119,48 +113,7 @@ class Controller_Kohanut_Admin extends Controller {
 			$this->request->response = $this->view;
 		}
 	}
-	
-	public function action_media()
-	{
-		// Get the file path from the request
-		$file = $this->request->param('file');
-		
-		// Find the file extension
-		$ext = pathinfo($file, PATHINFO_EXTENSION);
-		
-		// Remove the extension from the filename
-		$file = substr($file, 0, -(strlen($ext) + 1));
-		
-		// Find the file
-		$file = Kohana::find_file('kohanut-media', $file, $ext);
-		
-		// If it wasn't found, send a 404
-		if ( ! $file )
-		{
-			// Return a 404 status
-			$this->request->status = 404;
-			return;
-		}
-		
-		// If the browser sent a "if modified since" header, and the file hasn't changed, send a 304
-		if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) AND strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == filemtime($file))
-		{
-			$this->request->status = 304;
-			return;
-		}
-		
-		// Send the file content as the response, and send some basic headers
-		$this->request->response = file_get_contents($file);
-		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
-		$this->request->headers['Content-Length'] = filesize($file);
-		
-		// Tell browsers to cache the file for an hour. Chrome especially seems to not want to cache things
-		$cachefor = 3600;
-		$this->request->headers['Cache-Control'] = 'max-age='.$cachefor.', must-revalidate, public';
-		$this->request->headers['Expires'] = gmdate('D, d M Y H:i:s',time() + $cachefor).'GMT';
-		$this->request->headers['Last-Modified'] = gmdate('D, d M Y H:i:s',filemtime($file)).' GMT';
-	}
-	
+
 	public function action_login()
 	{
 		// If the user is logged in, redirect them
