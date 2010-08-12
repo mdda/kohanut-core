@@ -39,7 +39,7 @@
 		Event::run('kohanut_admin_navigation_link', $admin_nav_links);
 		foreach ($admin_nav_links as $name => $options):
 		?>
-			<li><?php echo html::anchor( Route::get('kohanut-admin')->uri($options) , __($name) ) ?></li>
+			<li><?php echo html::anchor( Route::get('kohanut-plugin-admin')->uri($options) , __($name) ) ?></li>
 		<?php
 		endforeach;
 		?>
