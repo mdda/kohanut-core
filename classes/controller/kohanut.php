@@ -76,7 +76,7 @@ class Controller_Kohanut extends Controller
 			}
 			
 			// Check for a redirect on this url
-			Sprig::factory('kohanut_redirect',array('url',$url))->go();
+			Sprig::factory('kohanut_redirect')->find($url)->go();
 			
 			// Find the page that matches this url, and isn't an external link
 			$query = DB::select()->where('url','=',$url)->where('islink','=',0);
