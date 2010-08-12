@@ -2,6 +2,7 @@
 
 // Grab the list of modules, and check if the install folder is hanging around, if it is, set the install route
 $modules = Kohana::modules();
+
 if (is_dir($modules['kohanut'].'/classes/controller/kohanut/install'))
 {
 	Route::set('kohanut-install','admin/install')
