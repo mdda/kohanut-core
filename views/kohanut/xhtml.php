@@ -33,6 +33,6 @@
 
 <?php echo $layoutcode ?>
 <!-- End Page Layout Code -->
-<?php if ( ! IN_PRODUCTION) echo View::factory('profiler/stats') ?>
+<?php if (Kohana::$environment == 'development') echo View::factory('profiler/stats') ?>
 </body>
 </html>
