@@ -181,13 +181,19 @@ ul.standardlist {
 	
 	ul.standardlist li div.actions {
 		float:right;
-		display:none;
+		filter:alpha(opacity=30);
+		-moz-opacity: 0.3;
+		-khtml-opacity: 0.3;
+		opacity: 0.3;
 		padding:0; margin:0;
 		padding-right:5px;
 	}
 	
 		ul.standardlist li:hover div.actions {
-			display:block;
+			filter:alpha(opacity=100);
+			-moz-opacity: 1.0;
+			-khtml-opacity: 1.0;
+			opacity: 1.0;
 		}
 		
 		ul.standardlist div.actions a {
