@@ -14,15 +14,23 @@ class Kohanut_Plugin {
 	{
 		if (empty(Kohanut_Plugin::$_known_plugins))
 		{
-			$plugins = Sprig::factory('kohanut_plugin')->load(NULL, FALSE);
-			foreach ($plugins as $plugin)
+			try
 			{
-				if ($plugin->installed)
-				{
-					Kohanut_Plugin::$_installed_plugins[$plugin->name] = $plugin->name;
-				}
+				$plugins = Sprig::factory('kohanut_plugin')->load(NULL, FALSE);
 
-				Kohanut_Plugin::$_known_plugins[$plugin->name] = $plugin->name;
+				foreach ($plugins as $plugin)
+				{
+					if ($plugin->installed)
+					{
+						Kohanut_Plugin::$_installed_plugins[$plugin->name] = $plugin->name;
+					}
+
+					Kohanut_Plugin::$_known_plugins[$plugin->name] = $plugin->name;
+				}
+			}
+			catch (Database_Exception $e)
+			{
+				return;
 			}
 		}
 
