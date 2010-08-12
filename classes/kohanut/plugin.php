@@ -48,7 +48,7 @@ class Kohanut_Plugin {
 		if (isset(Kohanut_Plugin::$_installed_plugins[$name]))
 		{
 			$class = "Kohanut_Plugin_".$name;
-			$class::init();
+			call_user_func(array($class, 'init'));
 		}
 	}
 
@@ -92,7 +92,7 @@ class Kohanut_Plugin {
 		// Give the plugin a chance to get itself ready to go.
 		$class = "Kohanut_Plugin_".$name;
 
-		if ( ! $class::install())
+		if ( ! call_user_func(array($class, 'install')))
 		{
 			unset(Kohanut_Plugin::$_registered_plugins[$name]);
 			// TODO: Alert the user somehow
@@ -127,7 +127,7 @@ class Kohanut_Plugin {
 		// Give the plugin a chance to get itself ready to be disabled.
 		$class = "Kohanut_Plugin_".$name;
 
-		if ( ! $class::uninstall())
+		if ( ! call_user_func(array($class, 'uninstall')))
 		{
 			// TODO: Alert the user somehow
 			return FALSE;
