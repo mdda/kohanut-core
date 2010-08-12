@@ -36,7 +36,13 @@ class Kohanut_Twig {
 		
 		$template = self::$twig->loadTemplate($code);
 		
-		$out = $template->render(array('Kohanut'=>new Kohanut));
+		$twig_variables = array();
+
+		Event::run('kohanut_plugin_register_twig_variables', $twig_variables);
+
+		$twig_variables['Kohanut'] = new Kohanut;
+
+		$out = $template->render($twig_variables);
 		
 		if (isset($benchmark))
 		{
