@@ -147,4 +147,17 @@ class Kohanut_Plugin {
 
 		return TRUE;
 	}
+
+	/**
+	 * Used to check if a plugin is both installed and active.
+	 *
+	 * Currently - plugins cant be de-activated so this simply checks installed.
+	 *
+	 * @param string $name
+	 * @return boolean
+	 */
+	public static function active($name)
+	{
+		return isset(Kohanut_Plugin::$_installed_plugins[$name]);
+	}
 }
