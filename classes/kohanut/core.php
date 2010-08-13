@@ -57,6 +57,26 @@ class Kohanut_Core {
 		
 		return self::$page->url;
 	}
+
+	/**
+	 * Proxy to URL::Site();
+	 *
+	 * @return  string
+	 */
+	public static function url_site($url = '')
+	{
+		return url::site($url);
+	}
+
+	/**
+	 * Proxy to URL::Base();
+	 *
+	 * @return  string
+	 */
+	public static function url_base()
+	{
+		return url::base();
+	}
 	
 	/**
 	 * Draws the main nav.
