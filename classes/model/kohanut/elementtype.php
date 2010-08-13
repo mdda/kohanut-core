@@ -14,8 +14,8 @@ class Model_Kohanut_Elementtype extends Sprig {
 
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,
-			
-			'name' => new Sprig_Field_Text,
+			'name' => new Sprig_Field_Char,
+			'display_name' => new Sprig_Field_Char,
 		);
 	
 	}
