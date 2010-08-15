@@ -441,7 +441,7 @@ class Kohanut_Core {
 		$run = Profiler::application();
 		$run = $run['current'];
 		$queries = Profiler::groups();
-		$queries = count($queries['database (default)']);
+		$queries = isset($queries['database (default)'])?count($queries['database (default)']):'unknown';
 		return "Page rendered in " . Num::format($run['time'],3) . " seconds using " . Num::format($run['memory']/1024/1024,2) . "MB and " . $queries . " queries.";
 	}
 	
