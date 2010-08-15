@@ -177,7 +177,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 				(29, 16, 1, 1, 1, 23);
 			
 			INSERT INTO `kohanut_elementtypes` (`id`, `name`) VALUES
-				(1, 'content'), (2, 'request'), (3, 'snippet');
+				(1, 'content'), (2, 'request'), (3, 'snippet'), (4, 'spacer');
 			
 			INSERT INTO `kohanut_element_content` (`id`, `code`, `markdown`, `twig`) VALUES (1, '# Thanks for Using Kohanut!\n\nIf you are seeing this message that Kohanut has been successfully installed and is ready to go!  You can browse around the default site using the navigation at the top of the screen.  To log in to the admin and start making changes simply browse to [/admin](/admin) and log in using the password you entered during the install.  Enjoy!', 1, 0);
 			INSERT INTO `kohanut_element_content` (`id`, `code`, `markdown`, `twig`) VALUES (5, '# Page not found\n\nThe page could not be found.  You could try going [Home](/) or see our [Products](/products).\n\n{{ Kohanut.status(404) }}', 1, 1);
